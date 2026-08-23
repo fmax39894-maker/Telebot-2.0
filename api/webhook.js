@@ -34,13 +34,8 @@ function displayName(user) {
 
 function remember(chatId, user) {
   if (!user || user.is_bot) return;
-
   const key = String(chatId);
-
-  if (!memberCache.has(key)) {
-    memberCache.set(key, new Map());
-  }
-
+  if (!memberCache.has(key)) memberCache.set(key, new Map());
   memberCache.get(key).set(String(user.id), {
     id: user.id,
     first_name: user.first_name || "",
@@ -70,11 +65,7 @@ async function tg(method, payload = {}) {
 }
 
 async function sendMessage(chatId, text, extra = {}) {
-  return tg("sendMessage", {
-    chat_id: chatId,
-    text,
-    ...extra
-  });
+  return tg("sendMessage", { chat_id: chatId, text, ...extra });
 }
 
 function mainKeyboard() {
@@ -92,100 +83,75 @@ function mainKeyboard() {
         { text: "🖼️ Image", callback_data: "image" },
         { text: "🎬 Video", callback_data: "video" }
       ],
-      [
-        { text: "🏓 Ping", callback_data: "ping" }
-      ]
+      [{ text: "🏓 Ping", callback_data: "ping" }]
     ]
   };
 }
 
 function backButton() {
-  return {
-    inline_keyboard: [
-      [{ text: "⬅️ Main Menu", callback_data: "start" }]
-    ]
-  };
+  return { inline_keyboard: [[{ text: "⬅️ Main Menu", callback_data: "start" }]] };
 }
 
 async function start(msg) {
-  await sendMessage(msg.chat.id, INTRO, {
-    reply_markup: mainKeyboard()
-  });
+  await sendMessage(msg.chat.id, INTRO, { reply_markup: mainKeyboard() });
 }
 
 async function help(msg) {
-  const text =
+  await sendMessage(msg.chat.id,
 `🛠️ GRAND X — COMMANDS
 
 🔳 QR CODE
 Send:
- /Qr https://google.com
-
-Example:
- /Qr https://youtube.com
+/Qr https://google.com
 
 The bot creates a high-quality QR image with a wide white border.
 
 🔇 MUTE — ADMINS / OWNER ONLY
 Reply to a member's message and send:
- /Mute
+/Mute
 
-The selected member will be restricted for 10 minutes.
+⏱️ The selected member is restricted for 10 minutes.
 
 📢 ALL — ADMINS / OWNER ONLY
- /all
-
-Mentions members observed by the bot.
+/all
 
 ❤️ SPAM — ADMINS / OWNER ONLY
- /Spam
-
-Sends a small controlled emoji test.
+/Spam
 
 🖼️ IMAGE
- /Image
-
-Gets a random image from your configured sources.
+/Image
 
 🎬 VIDEO
- /Video
-
-Gets a random video from your configured sources.
+/Video
 
 🏓 STATUS
- /ping
-
-Checks whether Grand X is online.`;
-
-  await sendMessage(msg.chat.id, text, {
-    reply_markup: backButton()
-  });
+/ping`,
+    { reply_markup: backButton() }
+  );
 }
 
 async function qrHelp(msg) {
-  const text =
+  await sendMessage(msg.chat.id,
 `🔳 GRAND X — QR CODE
 
 Create a QR code from any web link.
 
 📌 Command:
- /Qr LINK
+/Qr LINK
 
 ✅ Example:
- /Qr https://google.com
+/Qr https://google.com
 
 Another example:
- /Qr https://youtube.com
+/Qr https://youtube.com
 
-The QR image is generated in high quality with a wide white scanning area.`;
-
-  await sendMessage(msg.chat.id, text, {
-    reply_markup: backButton()
-  });
+The QR image is generated in high quality with a wide white scanning area.`,
+    { reply_markup: backButton() }
+  );
 }
 
 async function moderationHelp(msg) {
-  const text =
+  await sendMessage(msg.chat.id,
 `🔇 GRAND X — MODERATION
 
 👑 ADMIN / OWNER ONLY
@@ -194,25 +160,17 @@ To mute a member:
 
 1. Reply to the member's message.
 2. Send:
- /Mute
-
-⏱️ Duration:
-10 minutes
-
-Example:
-[Reply to member]
 /Mute
 
-The bot must have permission to restrict members.`;
+⏱️ Duration: 10 minutes
 
-  await sendMessage(msg.chat.id, text, {
-    reply_markup: backButton()
-  });
+The bot must have permission to restrict members.`,
+    { reply_markup: backButton() }
+  );
 }
 
 async function about(msg) {
-  await sendMessage(
-    msg.chat.id,
+  await sendMessage(msg.chat.id,
 `❤️ GRAND X
 
 Professional Telegram group assistant.
@@ -227,10 +185,7 @@ Professional Telegram group assistant.
 }
 
 async function ping(msg) {
-  await sendMessage(
-    msg.chat.id,
-    "🏓 Pong!\n\n✅ Grand X is online."
-  );
+  await sendMessage(msg.chat.id, "🏓 Pong!\n\n✅ Grand X is online.");
 }
 
 async function isAdminOrOwner(chatId, userId) {
@@ -238,7 +193,6 @@ async function isAdminOrOwner(chatId, userId) {
     chat_id: chatId,
     user_id: userId
   });
-
   return member.status === "creator" || member.status === "administrator";
 }
 
@@ -246,13 +200,8 @@ async function requireAdminOrOwner(msg) {
   if (!msg.from) return false;
 
   try {
-    const allowed = await isAdminOrOwner(
-      msg.chat.id,
-      msg.from.id
-    );
-
-    if (allowed) return true;
-  } catch (error) {
+    if (await isAdminOrOwner(msg.chat.id, msg.from.id)) return true;
+  } catch {
     await sendMessage(
       msg.chat.id,
       "❌ I could not verify your admin status. Make sure Grand X is an administrator in this group."
@@ -264,17 +213,13 @@ async function requireAdminOrOwner(msg) {
     msg.chat.id,
     "⛔ This command is available only to group administrators and the group owner."
   );
-
   return false;
 }
 
 async function qr(msg, link) {
-  if (!link) {
-    return qrHelp(msg);
-  }
+  if (!link) return qrHelp(msg);
 
   let url;
-
   try {
     url = new URL(link).href;
   } catch {
@@ -289,40 +234,25 @@ async function qr(msg, link) {
     width: 1600,
     margin: 14,
     errorCorrectionLevel: "H",
-    color: {
-      dark: "#000000",
-      light: "#FFFFFF"
-    }
+    color: { dark: "#000000", light: "#FFFFFF" }
   });
 
   const form = new FormData();
-
   form.append("chat_id", String(msg.chat.id));
-
   form.append("photo", buffer, {
     filename: "grand-x-qr.png",
     contentType: "image/png"
   });
+  form.append("caption", `🔳 GRAND X QR CODE\n\n🔗 ${url}`);
 
-  form.append(
-    "caption",
-    `🔳 GRAND X QR CODE\n\n🔗 ${url}`
-  );
-
-  const result = await axios.post(
-    `${API}/sendPhoto`,
-    form,
-    {
-      headers: form.getHeaders(),
-      maxBodyLength: Infinity,
-      timeout: 25000
-    }
-  );
+  const result = await axios.post(`${API}/sendPhoto`, form, {
+    headers: form.getHeaders(),
+    maxBodyLength: Infinity,
+    timeout: 25000
+  });
 
   if (!result.data?.ok) {
-    throw new Error(
-      result.data?.description || "QR image upload failed"
-    );
+    throw new Error(result.data?.description || "QR image upload failed");
   }
 }
 
@@ -339,10 +269,7 @@ async function mute(msg) {
   }
 
   if (target.id === msg.from?.id) {
-    return sendMessage(
-      msg.chat.id,
-      "❌ You cannot mute yourself."
-    );
+    return sendMessage(msg.chat.id, "❌ You cannot mute yourself.");
   }
 
   try {
@@ -385,10 +312,7 @@ async function mute(msg) {
       { parse_mode: "HTML" }
     );
   } catch (error) {
-    await sendMessage(
-      msg.chat.id,
-      `❌ Mute failed.\n\n${error.message}`
-    );
+    await sendMessage(msg.chat.id, `❌ Mute failed.\n\n${error.message}`);
   }
 }
 
@@ -412,10 +336,7 @@ async function all(msg) {
     await sendMessage(
       msg.chat.id,
       "📢 " + mentions.slice(i, i + 20).join(" "),
-      {
-        parse_mode: "HTML",
-        disable_web_page_preview: true
-      }
+      { parse_mode: "HTML", disable_web_page_preview: true }
     );
   }
 }
@@ -423,45 +344,31 @@ async function all(msg) {
 async function spam(msg) {
   if (!await requireAdminOrOwner(msg)) return;
 
-  const emojis = [
-    "❤️", "💓", "💗", "💖", "🫀",
-    "✨", "🔥", "💙", "💚", "💛"
-  ];
+  const emojis = ["❤️", "💓", "💗", "💖", "🫀", "✨", "🔥", "💙", "💚", "💛"];
 
   for (let i = 0; i < 5; i++) {
-    const text = Array.from(
-      { length: 12 },
-      () => emojis[Math.floor(Math.random() * emojis.length)]
+    const text = Array.from({ length: 12 }, () =>
+      emojis[Math.floor(Math.random() * emojis.length)]
     ).join(" ");
 
     await sendMessage(msg.chat.id, text);
-
-    if (i < 4) {
-      await new Promise(resolve => setTimeout(resolve, 700));
-    }
+    if (i < 4) await new Promise(resolve => setTimeout(resolve, 700));
   }
 }
 
 function absoluteUrl(base, value) {
   if (!value) return null;
-
-  try {
-    return new URL(value, base).href;
-  } catch {
-    return null;
-  }
+  try { return new URL(value, base).href; }
+  catch { return null; }
 }
 
 async function fetchHtml(url) {
   const response = await axios.get(url, {
     timeout: 15000,
     maxRedirects: 5,
-    headers: {
-      "User-Agent": "Mozilla/5.0 GrandXBot/5.0"
-    },
+    headers: { "User-Agent": "Mozilla/5.0 GrandXBot/5.0" },
     validateStatus: status => status >= 200 && status < 400
   });
-
   return response.data;
 }
 
@@ -470,28 +377,14 @@ function extractImages(html, baseUrl) {
   const urls = new Set();
 
   $("img").each((_, el) => {
-    for (const attr of [
-      "src",
-      "data-src",
-      "data-original"
-    ]) {
-      const url = absoluteUrl(
-        baseUrl,
-        $(el).attr(attr)
-      );
-
+    for (const attr of ["src", "data-src", "data-original"]) {
+      const url = absoluteUrl(baseUrl, $(el).attr(attr));
       if (url) urls.add(url);
     }
   });
 
-  $(
-    'meta[property="og:image"], meta[name="twitter:image"]'
-  ).each((_, el) => {
-    const url = absoluteUrl(
-      baseUrl,
-      $(el).attr("content")
-    );
-
+  $('meta[property="og:image"], meta[name="twitter:image"]').each((_, el) => {
+    const url = absoluteUrl(baseUrl, $(el).attr("content"));
     if (url) urls.add(url);
   });
 
@@ -503,41 +396,25 @@ function extractVideos(html, baseUrl) {
   const urls = new Set();
 
   $("video").each((_, el) => {
-    const direct = absoluteUrl(
-      baseUrl,
-      $(el).attr("src")
-    );
-
+    const direct = absoluteUrl(baseUrl, $(el).attr("src"));
     if (direct) urls.add(direct);
 
     $(el).find("source").each((__, source) => {
-      const url = absoluteUrl(
-        baseUrl,
-        $(source).attr("src")
-      );
-
+      const url = absoluteUrl(baseUrl, $(source).attr("src"));
       if (url) urls.add(url);
     });
   });
 
-  $(
-    'meta[property="og:video"], meta[property="og:video:url"], meta[name="twitter:player:stream"]'
-  ).each((_, el) => {
-    const url = absoluteUrl(
-      baseUrl,
-      $(el).attr("content")
-    );
-
+  $('meta[property="og:video"], meta[property="og:video:url"], meta[name="twitter:player:stream"]').each((_, el) => {
+    const url = absoluteUrl(baseUrl, $(el).attr("content"));
     if (url) urls.add(url);
   });
 
   return [...urls];
 }
 
-function randomItem(items) {
-  return items[
-    Math.floor(Math.random() * items.length)
-  ];
+function shuffled(list) {
+  return [...list].sort(() => Math.random() - 0.5);
 }
 
 async function image(msg) {
@@ -548,22 +425,40 @@ async function image(msg) {
     );
   }
 
-  const site = randomItem(imageSites);
-  const html = await fetchHtml(site);
-  const images = extractImages(html, site);
+  // NEW: randomize all sources and try each source at most once.
+  const sources = shuffled(imageSites);
 
-  if (!images.length) {
-    return sendMessage(
-      msg.chat.id,
-      "❌ No directly accessible image was found on the selected page."
-    );
+  await sendMessage(
+    msg.chat.id,
+    "🖼️ Searching for an image..."
+  );
+
+  for (const site of sources) {
+    try {
+      const html = await fetchHtml(site);
+      const images = extractImages(html, site);
+
+      if (!images.length) {
+        console.log(`No image found: ${site}`);
+        continue;
+      }
+
+      await tg("sendPhoto", {
+        chat_id: msg.chat.id,
+        photo: images[Math.floor(Math.random() * images.length)],
+        caption: `🖼️ Grand X Image\n\nSource: ${site}`
+      });
+
+      return;
+    } catch (error) {
+      console.error(`Image source failed: ${site}`, error.message);
+    }
   }
 
-  await tg("sendPhoto", {
-    chat_id: msg.chat.id,
-    photo: randomItem(images),
-    caption: `🖼️ Grand X Image\n\nSource: ${site}`
-  });
+  await sendMessage(
+    msg.chat.id,
+    "❌ I couldn't find a usable image from any configured source."
+  );
 }
 
 async function video(msg) {
@@ -574,22 +469,40 @@ async function video(msg) {
     );
   }
 
-  const site = randomItem(videoSites);
-  const html = await fetchHtml(site);
-  const videos = extractVideos(html, site);
+  // NEW: randomize all sources and try each source at most once.
+  const sources = shuffled(videoSites);
 
-  if (!videos.length) {
-    return sendMessage(
-      msg.chat.id,
-      "❌ No directly accessible video was found on the selected page."
-    );
+  await sendMessage(
+    msg.chat.id,
+    "🎬 Searching for a video..."
+  );
+
+  for (const site of sources) {
+    try {
+      const html = await fetchHtml(site);
+      const videos = extractVideos(html, site);
+
+      if (!videos.length) {
+        console.log(`No video found: ${site}`);
+        continue;
+      }
+
+      await tg("sendVideo", {
+        chat_id: msg.chat.id,
+        video: videos[Math.floor(Math.random() * videos.length)],
+        caption: `🎬 Grand X Video\n\nSource: ${site}`
+      });
+
+      return;
+    } catch (error) {
+      console.error(`Video source failed: ${site}`, error.message);
+    }
   }
 
-  await tg("sendVideo", {
-    chat_id: msg.chat.id,
-    video: randomItem(videos),
-    caption: `🎬 Grand X Video\n\nSource: ${site}`
-  });
+  await sendMessage(
+    msg.chat.id,
+    "❌ I couldn't find a usable video from any configured source."
+  );
 }
 
 async function welcome(msg) {
@@ -601,28 +514,20 @@ async function welcome(msg) {
     let photoId = null;
 
     try {
-      const photos = await tg(
-        "getUserProfilePhotos",
-        {
-          user_id: user.id,
-          limit: 1
-        }
-      );
+      const photos = await tg("getUserProfilePhotos", {
+        user_id: user.id,
+        limit: 1
+      });
 
-      if (
-        photos.total_count &&
-        photos.photos?.[0]?.[0]
-      ) {
+      if (photos.total_count && photos.photos?.[0]?.[0]) {
         photoId = photos.photos[0][0].file_id;
       }
     } catch {}
 
     const caption =
-`❤️ <b>Welcome ${esc(displayName(user))}!</b>
-
-Welcome to <b>${esc(msg.chat.title || "our group")}</b> ❤️
-
-🆔 Telegram ID: <code>${user.id}</code>`;
+      `❤️ <b>Welcome ${esc(displayName(user))}!</b>\n\n` +
+      `Welcome to <b>${esc(msg.chat.title || "our group")}</b> ❤️\n\n` +
+      `🆔 Telegram ID: <code>${user.id}</code>`;
 
     if (photoId) {
       await tg("sendPhoto", {
@@ -632,117 +537,58 @@ Welcome to <b>${esc(msg.chat.title || "our group")}</b> ❤️
         parse_mode: "HTML"
       });
     } else {
-      await sendMessage(
-        msg.chat.id,
-        caption,
-        { parse_mode: "HTML" }
-      );
+      await sendMessage(msg.chat.id, caption, { parse_mode: "HTML" });
     }
   }
 }
 
 async function callbackQuery(update) {
   const query = update.callback_query;
-
   if (!query) return;
 
-  await tg(
-    "answerCallbackQuery",
-    {
-      callback_query_id: query.id
-    }
-  );
+  await tg("answerCallbackQuery", { callback_query_id: query.id });
 
   const msg = query.message;
-
   if (!msg) return;
 
   switch (query.data) {
-    case "start":
-      return start(msg);
-
-    case "help":
-      return help(msg);
-
-    case "qr_help":
-      return qrHelp(msg);
-
-    case "moderation":
-      return moderationHelp(msg);
-
-    case "about":
-      return about(msg);
-
-    case "ping":
-      return ping(msg);
-
-    case "image":
-      return image(msg);
-
-    case "video":
-      return video(msg);
-
-    default:
-      return;
+    case "start": return start(msg);
+    case "help": return help(msg);
+    case "qr_help": return qrHelp(msg);
+    case "moderation": return moderationHelp(msg);
+    case "about": return about(msg);
+    case "ping": return ping(msg);
+    case "image": return image(msg);
+    case "video": return video(msg);
   }
 }
 
 async function messageUpdate(update) {
   const msg = update.message;
-
   if (!msg) return;
 
-  if (msg.from) {
-    remember(msg.chat.id, msg.from);
-  }
+  if (msg.from) remember(msg.chat.id, msg.from);
+  for (const user of msg.new_chat_members || []) remember(msg.chat.id, user);
 
-  for (const user of msg.new_chat_members || []) {
-    remember(msg.chat.id, user);
-  }
-
-  if (msg.new_chat_members?.length) {
-    await welcome(msg);
-    return;
-  }
-
+  if (msg.new_chat_members?.length) return welcome(msg);
   if (!msg.text) return;
 
-  const match = msg.text.match(
-    /^\/([A-Za-z]+)(?:@\w+)?(?:\s+([\s\S]+))?$/
-  );
-
+  const match = msg.text.match(/^\/([A-Za-z]+)(?:@\w+)?(?:\s+([\s\S]+))?$/);
   if (!match) return;
 
   const command = match[1].toLowerCase();
   const args = (match[2] || "").trim();
 
   switch (command) {
-    case "start":
-      return start(msg);
-
-    case "help":
-      return help(msg);
-
-    case "ping":
-      return ping(msg);
-
-    case "qr":
-      return qr(msg, args);
-
-    case "mute":
-      return mute(msg);
-
-    case "all":
-      return all(msg);
-
-    case "spam":
-      return spam(msg);
-
-    case "image":
-      return image(msg);
-
-    case "video":
-      return video(msg);
+    case "start": return start(msg);
+    case "help": return help(msg);
+    case "ping": return ping(msg);
+    case "qr": return qr(msg, args);
+    case "mute": return mute(msg);
+    case "all": return all(msg);
+    case "spam": return spam(msg);
+    case "image": return image(msg);
+    case "video": return video(msg);
   }
 }
 
@@ -756,17 +602,11 @@ module.exports = async function handler(req, res) {
   }
 
   if (req.method !== "POST") {
-    return res.status(405).json({
-      ok: false,
-      error: "Method not allowed"
-    });
+    return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
   try {
-    if (
-      !BOT_TOKEN ||
-      BOT_TOKEN === "PASTE_NEW_BOT_TOKEN_HERE"
-    ) {
+    if (!BOT_TOKEN || BOT_TOKEN === "PASTE_NEW_BOT_TOKEN_HERE") {
       return res.status(500).json({
         ok: false,
         error: "BOT_TOKEN is not configured."
@@ -779,14 +619,9 @@ module.exports = async function handler(req, res) {
       await messageUpdate(req.body);
     }
 
-    return res.status(200).json({
-      ok: true
-    });
+    return res.status(200).json({ ok: true });
   } catch (error) {
-    console.error(
-      "Grand X webhook error:",
-      error
-    );
+    console.error("Grand X webhook error:", error);
 
     return res.status(200).json({
       ok: false,
