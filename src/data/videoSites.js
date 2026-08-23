@@ -2,5 +2,10 @@
 // Only sources marked FOUND by the Media Source Checker
 
 module.exports = [
-  "https://xhamster46.desi/videos/welcome-to-candyland-teen-group-sex-with-busty-stepsisters-xh1yLiw?_gl=1%2A1as9mmm%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjA0Mi4wLjAuMA..",\n  "https://xhamster46.desi/videos/busty-hot-stepsister-gets-rough-anal-sex-from-lucky-stepbro-xhXdKsm?_gl=1%2A5w59xr%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjE1MC4wLjAuMA..",\n  "https://xhamster46.desi/videos/hungry-stepsister-finally-tries-stepbrothers-big-cock-xhfkZiB?_gl=1%2A5w59xr%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjE1MC4wLjAuMA..",\n  "https://xhamster46.desi/videos/too-hot-to-handle-busty-stepsister-tries-hot-pepper-and-stepbrothers-big-cock-xhgtFjm?_gl=1%2A8f6kgb%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjE1MC4wLjAuMA..",\n  "https://xhamster46.desi/videos/mypervyfamily-my-thicc-stepsister-lets-me-free-use-her-melztube-xhkL2cr?_gl=1%2A8f6kgb%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjE1MC4wLjAuMA.."
+      "https://mp4-cdn77.xvideos-cdn.com/17f3816b-8e67-4938-a17c-cc2febdfe486/0/video_360p.mp4?secure=Q-shUmMeo-SnJvtg-bn5RQ==,1787516372",
+    "https://mp4-cdn77.xvideos-cdn.com/17f3816b-8e67-4938-a17c-cc2febdfe486/0/video_240p.mp4?secure=SPWEBbB3ApPWXlmT5pR8lA==,1787516372",
+    "https://cdn3.x8n.online/getvideo/xxx-european-gk5llfkxzkk.mp4"
+    "https://mp4-cdn77.xvideos-cdn.com/c9547e39-2cdc-4137-813e-602c16f7589b/0/video_360p.mp4?secure=7kx-usFyicvDebC_YxzV8w==,1787516438",
+    "https://mp4-cdn77.xvideos-cdn.com/c9547e39-2cdc-4137-813e-602c16f7589b/0/video_240p.mp4?secure=mvpwV1skTTiWBIea7Fn0Hg==,1787516438",
+    "https://cdn.x8n.online/getvideo/xxx-cumshot-59h31lkjw1v.mp4"
 ];
