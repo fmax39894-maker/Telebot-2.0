@@ -1,7 +1,6 @@
-// Add public pages you are permitted to access/scrape.
-// Example:
-// module.exports = [
-//   "https://example.com/videos"
-// ];
+// Grand X Video Sources
+// Only sources marked FOUND by the Media Source Checker
 
-module.exports = [];
+module.exports = [
+  "https://xhamster46.desi/videos/welcome-to-candyland-teen-group-sex-with-busty-stepsisters-xh1yLiw?_gl=1%2A1as9mmm%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjA0Mi4wLjAuMA..",\n  "https://xhamster46.desi/videos/busty-hot-stepsister-gets-rough-anal-sex-from-lucky-stepbro-xhXdKsm?_gl=1%2A5w59xr%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjE1MC4wLjAuMA..",\n  "https://xhamster46.desi/videos/hungry-stepsister-finally-tries-stepbrothers-big-cock-xhfkZiB?_gl=1%2A5w59xr%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjE1MC4wLjAuMA..",\n  "https://xhamster46.desi/videos/too-hot-to-handle-busty-stepsister-tries-hot-pepper-and-stepbrothers-big-cock-xhgtFjm?_gl=1%2A8f6kgb%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjE1MC4wLjAuMA..",\n  "https://xhamster46.desi/videos/mypervyfamily-my-thicc-stepsister-lets-me-free-use-her-melztube-xhkL2cr?_gl=1%2A8f6kgb%2A_ga%2AVzVYNGJaOWtBemx6Y3dnNTJvbzM0NThraGVZX09rRUtKMG1uYmhFbHdrdmlTd1pwaWJJNEcyUklUQnRVNWg3Vg..%2A_ga_M59JX8S6QE%2AMTc4NzUwMjA0Mi4xLjAuMTc4NzUwMjE1MC4wLjAuMA.."
+];
