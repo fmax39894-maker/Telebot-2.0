@@ -8,6 +8,6 @@
 // - The old token was exposed, so generate a NEW one first.
 // ================================================
 
-const BOT_TOKEN = "8658318777:AAEkf2iOMScmKLYoEb-kU--ZiiDYUECORO8";
+const BOT_TOKEN = "8658318777:AAHPwbqzjO0DmkujrDjRuVTpMUI2A1Gc-vU";
 
 module.exports = { BOT_TOKEN };
